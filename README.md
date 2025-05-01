@@ -18,7 +18,7 @@ Welcome to our goofy (yet highly practical) face-powered attendance app. This Fl
 8. [Troubleshooting](#troubleshooting)  
 9. [Future Improvements](#future-improvements)  
 10. [Contributing](#contributing)  
-11. [License](#license)  
+  
 
 ---
 
@@ -104,10 +104,13 @@ All with a snazzy Bootstrap UI, because you deserve something prettier than plai
 6. **Open your browser**  
    Navigate to `http://localhost:5000` and bask in the glory of face-powered attendance.
 
-7. **Bonus Tip**  
-   If You are unable to Download dlib from terminal use Manual approach
-   
-   ``Git Link for dlib file :  https://github.com/z-mahmud22/Dlib_Windows_Python3.x/tree/main ``
+
+## 🎁 Bonus Tips
+
+> **Pro Tip:** If you are unable to download dlib from the terminal, use the manual approach:
+
+Git Link for dlib file: https://github.com/z-mahmud22/Dlib_Windows_Python3.x/tree/main
+
 ---
 
 ## 🎬 How to Use
