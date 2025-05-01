@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Show Attendance{% endblock %}
+{% block content %}
+  <h2>Today's Attendance</h2>
+  <table class="table"><thead><tr><th>Date</th><th>Course</th><th>Code</th><th>Name</th></tr></thead><tbody>
+    {% for r in records %}
+      <tr><td>{{ r.date }}</td><td>{{ r.course }}</td><td>{{ r.code }}</td><td>{{ r.name }}</td></tr>
+    {% endfor %}
+  </tbody></table>
+{% endblock %}

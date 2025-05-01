@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid p-2">
+      <a class="navbar-brand ms-5 fs-4 fw-medium" href="/">ClassFace</a>
+      <div class="collapse navbar-collapse ms-5">
+        <ul class="navbar-nav me-auto fs-5">
+          <li class="nav-item"><a class="nav-link" href="/register/">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="/attendance/take">Take Attendance</a></li>
+          <li class="nav-item"><a class="nav-link" href="/attendance/show">Show Attendance</a></li>
+          <li class="nav-item"><a class="nav-link" href="/delete/">Manage Registrations</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container py-4 ">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

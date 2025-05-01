@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Take Attendance{% endblock %}
+{% block content %}
+  <h2 class="text-center mb-4">Take Attendance</h2>
+
+  <div class="row justify-content-center mb-3">
+    <div class="col-md-6">
+      <label for="courseSelect" class="form-label">Select Course</label>
+      <select id="courseSelect" class="form-select">
+        <option value="" data-name="">-- Choose a course --</option>
+        <option value="CSE-3200" data-name="Advanced Programming Laboratory">
+          CSE-3200 &mdash; Advanced Programming Laboratory (1.50)
+        </option>
+        <option value="CSE-3201" data-name="System Programming and Operating System">
+          CSE-3201 &mdash; System Programming and Operating System (3.00)
+        </option>
+        <option value="CSE-3202" data-name="System Programming and Operating System Laboratory">
+          CSE-3202 &mdash; System Programming and Operating System Laboratory (0.75)
+        </option>
+        <option value="CSE-3203" data-name="Computer Networks">
+          CSE-3203 &mdash; Computer Networks (3.00)
+        </option>
+        <option value="CSE-3204" data-name="Computer Networks Laboratory">
+          CSE-3204 &mdash; Computer Networks Laboratory (0.75)
+        </option>
+        <option value="CSE-3208" data-name="Technical Writing and Presentation Laboratory">
+          CSE-3208 &mdash; Technical Writing and Presentation Laboratory (0.75)
+        </option>
+        <option value="CSE-3211" data-name="Data Warehousing and Mining">
+          CSE-3211 &mdash; Data Warehousing and Mining (3.00)
+        </option>
+        <option value="CSE-3212" data-name="Data Warehousing and Mining Laboratory">
+          CSE-3212 &mdash; Data Warehousing and Mining Laboratory (0.75)
+        </option>
+        <option value="CSE-4200" data-name="Project/Thesis-II">
+          CSE-4200 &mdash; Project/Thesis-II (3.00)
+        </option>
+        <option value="Hum-3241" data-name="Industrial Management">
+          Hum-3241 &mdash; Industrial Management (1.50)
+        </option>
+        <option value="Hum-3243" data-name="Bengali Language and Literature">
+          Hum-3243 &mdash; Bengali Language and Literature (3.00)
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column align-items-center">
+    <video
+      id="video"
+      autoplay
+      playsinline
+      style="width:640px; height:480px; object-fit: cover; border:1px solid #ccc; border-radius:8px;"
+    ></video>
+
+    <button
+      id="btnAttend"
+      class="btn btn-success mt-3 px-4"
+    >
+      Capture &amp; Mark Attendance
+    </button>
+
+    <div id="msg" class="mt-3 w-50 text-center"></div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const msg   = document.getElementById('msg');
+    const btn   = document.getElementById('btnAttend');
+    const select = document.getElementById('courseSelect');
+
+    // 1) Start webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => video.srcObject = stream)
+      .catch(err => {
+        msg.innerHTML = `<div class="alert alert-danger">Webcam error: ${err}</div>`;
+        btn.disabled = true;
+      });
+
+    // 2) Capture & Mark Attendance
+    btn.onclick = async () => {
+      const code   = select.value;
+      const course = select.options[select.selectedIndex].dataset.name;
+      if (!code) {
+        msg.innerHTML = `<div class="alert alert-warning">Please select a course.</div>`;
+        return;
+      }
+
+      // grab frame
+      const canvas = document.createElement('canvas');
+      canvas.width  = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      const dataURL = canvas.toDataURL('image/jpeg');
+
+      // send to backend
+      const resp = await fetch('/attendance/mark', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ course, code, image: dataURL })
+      });
+      const result = await resp.json();
+      if (result.status === 'success') {
+        msg.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+      } else {
+        msg.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
+      }
+    };
+  </script>
+{% endblock %}

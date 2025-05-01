@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Manage Registrations{% endblock %}
+{% block content %}
+  <h2 class="mb-4">Manage Registered Students</h2>
+
+  {% if persons %}
+    <table class="table table-striped">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for p in persons %}
+          <tr id="{{ p.folder }}">
+            <td>{{ p.id }}</td>
+            <td>{{ p.name.replace('_',' ') }}</td>
+            <td>
+              <button
+                class="btn btn-sm btn-danger btn-delete"
+                data-folder="{{ p.folder }}"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert-info">No registrations found.</div>
+  {% endif %}
+
+  <script>
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const folder = btn.dataset.folder;
+        if (!confirm(`Really delete registration: ${folder}?`)) return;
+
+        const resp = await fetch('/delete/remove', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ folder })
+        });
+        const result = await resp.json();
+        if (result.status === 'success') {
+          document.getElementById(folder).remove();
+          alert(result.message);
+        } else {
+          alert('Error: ' + result.message);
+        }
+      });
+    });
+  </script>
+{% endblock %}
