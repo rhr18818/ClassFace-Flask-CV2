@@ -104,6 +104,9 @@ All with a snazzy Bootstrap UI, because you deserve something prettier than plai
 6. **Open your browser**  
    Navigate to `http://localhost:5000` and bask in the glory of face-powered attendance.
 
+ **Bonus Tip**  
+   If You are unable to Download dlib from terminal use Manual approach
+   Git Link for dlib file : ``` https://github.com/z-mahmud22/Dlib_Windows_Python3.x/tree/main ```
 ---
 
 ## 🎬 How to Use
@@ -191,9 +194,6 @@ flask_app/
 
 ---
 
-## 📜 License
-
-Distributed under the **MIT License**. See `LICENSE` for more info.
 
 ---
 
