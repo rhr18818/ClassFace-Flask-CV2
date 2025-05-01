@@ -106,6 +106,7 @@ All with a snazzy Bootstrap UI, because you deserve something prettier than plai
 
 7. **Bonus Tip**  
    If You are unable to Download dlib from terminal use Manual approach
+   
    ``Git Link for dlib file :  https://github.com/z-mahmud22/Dlib_Windows_Python3.x/tree/main ``
 ---
 
